@@ -11,9 +11,6 @@ public class Room
     public int AdminId { get; set; }
     [ForeignKey("AdminId")]
     public User Admin { get; set; }
-    // Bu malumot databse ga saqlanmaydi chunki bunaqa column bolmaydi databasaga.
     public List<User> Users { get; set; }
-    // List lar ham saqlanmaydi.
     public List<Outlay> Outlays { get; set; }
-    // List lar ham saqlanmaydi.
 }
