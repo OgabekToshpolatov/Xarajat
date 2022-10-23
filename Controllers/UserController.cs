@@ -93,6 +93,19 @@ public class UserController:ControllerBase
         return Ok();
     }
     
+    [HttpPost("join-room/{roomId}")]
+    public IActionResult JoinRoom(int roomId, string key)
+    {
+       var room = _context.Rooms.FirstOrDefault( r => r.Id == roomId);
+
+       if(room ==null || room.Key != key) return NotFound();
+
+       var user = _context.Users.FirstOrDefault(u => u.Id ==1);
+
+       user.RoomId = roomId;
+       _context.SaveChanges();
+       return Ok(user);
+    }
     
 
    
