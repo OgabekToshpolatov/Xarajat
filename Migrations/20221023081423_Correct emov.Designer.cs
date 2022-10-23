@@ -11,8 +11,8 @@ using Xarajat.Api.Data;
 namespace Xarajat.Api.Migrations
 {
     [DbContext(typeof(XarajatDbContext))]
-    [Migration("20221022192708_Initial_Create")]
-    partial class Initial_Create
+    [Migration("20221023081423_Correct emov")]
+    partial class Correctemov
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

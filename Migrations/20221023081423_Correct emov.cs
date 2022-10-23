@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Xarajat.Api.Migrations
 {
-    public partial class Initial_Create : Migration
+    public partial class Correctemov : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
