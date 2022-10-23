@@ -20,13 +20,7 @@ public class RoomController:ControllerBase
     [HttpGet]
     public IActionResult GetRooms()
     {
-        var rooms = _context.Rooms.Select(room => new GetRoomModel()
-        {
-               Id = room.Id,
-               Name = room.Name,
-               Key = room.Key,
-               Status = room.Status
-        }).ToList();
+        var rooms = _context.Rooms.Select(room => ConvertToRoomModel(room)).ToList();
 
         return Ok(rooms);
     }
@@ -54,7 +48,12 @@ public class RoomController:ControllerBase
 
         if(room == null) return NotFound();
 
-        return Ok(ConvertToRoomModel(room));
+        var user = _context.Users.FirstOrDefault(u => u.Id == room.AdminId);
+
+        var getRoomModel = ConvertToRoomModel(room);
+        getRoomModel.Admin = ConvertToUserModel(user);
+
+        return Ok(getRoomModel);
 
     }
 
@@ -96,7 +95,18 @@ public class RoomController:ControllerBase
             Name = room.Name,
             Key = room.Key,
             Status = room.Status,
-            //Admin = ConvertToUserModel(room.Admin)
+            Admin = ConvertToUserModel(room.Admin)
+        };
+    }
+
+    private GetUser ConvertToUserModel(User user)
+    {
+        if (user == null) return null;
+
+        return new GetUser
+        {
+            Id = user.Id,
+            Name = user.Name
         };
     }
 }

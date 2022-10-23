@@ -8,4 +8,5 @@ public class GetRoomModel
     public string Name { get; set; }
     public string Key { get; set; }
     public RoomStatus Status { get; set; }
+    public GetUser Admin { get; set; }
 }
