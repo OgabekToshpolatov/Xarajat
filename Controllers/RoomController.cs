@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Xarajat.Api.Data;
 using Xarajat.Api.Entities;
 using Xarajat.Api.Helpers;
@@ -20,7 +21,7 @@ public class RoomController:ControllerBase
     [HttpGet]
     public IActionResult GetRooms()
     {
-        var rooms = _context.Rooms.Select(room => ConvertToRoomModel(room)).ToList();
+        var rooms = _context.Rooms.ToList().Select(room => ConvertToRoomModel(room)).ToList();
 
         return Ok(rooms);
     }
@@ -44,14 +45,11 @@ public class RoomController:ControllerBase
     [HttpGet("{id}")]
     public IActionResult GetRoomById(int id)
     {
-        var room = _context.Rooms.FirstOrDefault(k => k.Id ==id);
+        var room = _context.Rooms.Include(r => r.Admin).FirstOrDefault(k => k.Id ==id);
 
         if(room == null) return NotFound();
 
-        var user = _context.Users.FirstOrDefault(u => u.Id == room.AdminId);
-
         var getRoomModel = ConvertToRoomModel(room);
-        getRoomModel.Admin = ConvertToUserModel(user);
 
         return Ok(getRoomModel);
 
@@ -95,7 +93,7 @@ public class RoomController:ControllerBase
             Name = room.Name,
             Key = room.Key,
             Status = room.Status,
-            Admin = ConvertToUserModel(room.Admin)
+            Admin = room.Admin == null ? null : ConvertToUserModel(room.Admin)
         };
     }
 
