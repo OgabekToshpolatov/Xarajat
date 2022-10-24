@@ -28,6 +28,8 @@ public partial class RoomController
     {
         var outlays = _context.Outlays.Where(Outlay => Outlay.RoomId == roomId).ToList();
 
+        if(outlays is null) return NotFound();
+
         return Ok(outlays);
 
     }

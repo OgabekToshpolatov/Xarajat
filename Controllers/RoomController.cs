@@ -115,6 +115,8 @@ public partial class RoomController:ControllerBase
                     .Include(r => r.Users)
                     .FirstOrDefault(k => k.Id == id );
 
+        if(room is null) return NotFound();
+
         return Ok(room.Users);
     }
 }
