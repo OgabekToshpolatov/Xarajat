@@ -21,7 +21,7 @@ public class RoomController:ControllerBase
     [HttpGet]
     public IActionResult GetRooms()
     {
-        var rooms = _context.Rooms.ToList().Select(room => ConvertToRoomModel(room)).ToList();
+        var rooms = _context.Rooms.Include(r => r.Admin).ToList().Select(room => ConvertToRoomModel(room)).ToList();
 
         return Ok(rooms);
     }
@@ -106,5 +106,13 @@ public class RoomController:ControllerBase
             Id = user.Id,
             Name = user.Name
         };
+    }
+
+    [HttpGet("{id}/users")]
+    public IActionResult GetRoomUsers(int id)
+    {
+        var users = _context.Users.Where( u => u.RoomId == id).ToList();
+
+        return Ok(users);
     }
 }

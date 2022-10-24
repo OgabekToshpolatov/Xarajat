@@ -95,21 +95,18 @@ public class UserController:ControllerBase
     
     // Xonaga user qoshadigan Action => 
     [HttpPost("join-room/{roomId}")]
-    public IActionResult JoinRoom(int roomId, string key)
+    public IActionResult JoinRoom(int roomId, string key, int userId)
     {
-        //xona dabase dan olinyabdi.
-       var room = _context.Rooms.FirstOrDefault( r => r.Id == roomId);
+       var room = _context.Rooms.FirstOrDefault(r => r.Id == roomId);
 
-       //xona bor yoki yuqligi tekshirilyabdi va  xona kaliti tugri yolki yuqligi tekshirilyabdi.
-       if(room ==null || room.Key != key) return NotFound();
-       
-       //user bor yoki yuqligi tekshirilyabdi.
-       var user = _context.Users.FirstOrDefault(u => u.Id ==1);
+        if (room == null || room.Key != key)
+            return NotFound();
 
-      
-       user.RoomId = roomId;
-       _context.SaveChanges();
-       return Ok(user);
+        var user = _context.Users.FirstOrDefault(u => u.Id == userId);
+
+        user.RoomId = roomId;
+        _context.SaveChanges();
+        return Ok(user);
     }
     
 
