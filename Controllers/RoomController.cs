@@ -9,7 +9,7 @@ namespace Xarajat.Api.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class RoomController:ControllerBase
+public partial class RoomController:ControllerBase
 {
     private readonly XarajatDbContext _context;
 
