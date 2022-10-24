@@ -90,7 +90,7 @@ public class UserController:ControllerBase
         _context.Users.Remove(user);
         _context.SaveChanges();
 
-        return Ok();
+        return Ok(user);
     }
     
     // Xonaga user qoshadigan Action => 

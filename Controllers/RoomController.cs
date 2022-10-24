@@ -111,8 +111,10 @@ public class RoomController:ControllerBase
     [HttpGet("{id}/users")]
     public IActionResult GetRoomUsers(int id)
     {
-        var users = _context.Users.Where( u => u.RoomId == id).ToList();
+        var room = _context.Rooms
+                    .Include(r => r.Users)
+                    .FirstOrDefault(k => k.Id == id );
 
-        return Ok(users);
+        return Ok(room.Users);
     }
 }
