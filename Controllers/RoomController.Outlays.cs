@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Xarajat.Api.Entities;
+using Xarajat.Api.Models;
 
 namespace Xarajat.Api.Controllers;
 
@@ -29,5 +31,26 @@ public partial class RoomController
         return Ok(outlays);
 
     }
+
+    [HttpGet("{roomId}/outlays/calculate")]
+    public IActionResult CalculateRoomOutlaysByRoomId(int roomId)
+    {
+        var room = _context.Rooms
+            .Include(r=>r.Users)
+            .Include(r=>r.Outlays)
+            .FirstOrDefault(r => r.Id == roomId);
+
+        if (room == null)
+            return NotFound();
+
+        var calculate = new CalculateRoomModel
+        {
+            UsersCount = room.Users.Count,
+            TotalCost = room.Outlays.Sum(outlay => outlay.Cost)
+        };
+
+        return Ok(calculate);
+    }
+
 
 }
