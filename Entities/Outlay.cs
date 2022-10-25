@@ -1,6 +1,6 @@
 ﻿namespace Xarajat.Api.Entities;
 
-public class Outlay
+public class Outlay  // Xarajatlarni xisoblovshi entity 
 {
     public int Id { get; set; }
     public string Description { get; set; }

@@ -8,6 +8,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+//Sqlite database dan foydalandek.
 builder.Services.AddDbContext<XarajatDbContext>(option =>
 {
     option.UseSqlite(builder.Configuration.GetConnectionString("Default"));
